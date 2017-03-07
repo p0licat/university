@@ -1,2 +1,2 @@
 # university
-Root folder for all computer science courses/ 
+Root folder for all computer science courses.
