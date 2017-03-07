@@ -1,0 +1,7 @@
+Client, 0, Mircea, 1962353535353
+Client, 1, Dorin, 1962353535354
+Client, 3, Marius, 1962353335353
+Client, 6, Dacia, 1962353444353
+Book, 0, Dorin Mateiu, Viata pe un Stalp, Mihaila
+Book, 1, Salutare, Lume, Viata
+Book, 2, Inca, O Carte, Buna

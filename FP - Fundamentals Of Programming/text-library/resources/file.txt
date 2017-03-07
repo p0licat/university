@@ -1,0 +1,16 @@
+Client, 1, Morra, 1854658795412
+Client, 2, Aorra, 1854658795413
+Client, 3, Borra, 1854658795414
+Client, 4, Corra, 1854658795415
+Client, 5, Dorra, 1854658795416
+Client, 6, Eorra, 1854658795417
+Client, 7, Forra, 1854658795418
+Client, 8, Gorra, 1854658795419
+Client, 9, Horra, 1854658795422
+Client, 10, Iorra, 1854658795432
+Book, 10, Hola, Mola, Dola
+Book, 4, HarryPotter, Ok, Peter
+Book, 1, GoodBook, No, No
+Rental, 3, 10, 0
+Rental, 1, 4, 1
+Rental, 1, 1, 2
