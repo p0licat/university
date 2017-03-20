@@ -42,6 +42,41 @@ public:
     {
         return *this->value;
     }
+
+    virtual bool operator==(const Vertex<T>& other)
+    {
+        if ( this->value == other.get_value() )
+            return true;
+        return false;
+    }
+
+    virtual bool operator>(const Vertex<T>& other)
+    {
+        if ( this->value > other.get_value() )
+            return true;
+        return false;
+    }
+
+    virtual bool operator<(const Vertex<T>& other)
+    {
+        if ( this->value < other.get_value() )
+            return true;
+        return false;
+    }
+
+    virtual bool operator<=(const Vertex<T>& other)
+    {
+        if ( this->value <= other.get_value() )
+            return true;
+        return false;
+    }
+
+    virtual bool operator>=(const Vertex<T>& other)
+    {
+        if ( this->value >= other.get_value() )
+            return true;
+        return false;
+    }
 };
 
 

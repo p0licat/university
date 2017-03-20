@@ -5,15 +5,28 @@
 #ifndef GRAPHALGORITHMS_GRAPH_H
 #define GRAPHALGORITHMS_GRAPH_H
 
-#include <vector>
 #include "vertex.h"
 
+#include <vector>
 
-
+/*
+ * MatrixGraph interface for Graph abstract data type.
+ * DirectedMatrixGraph and UndirectedMatrixGraph inherit this interface.
+ *
+ * This class family uses an STL vector matrix for storing the adjacency matrix. ( as seen in the typedefs )
+ * For the list of vertices, a vector<Vertex<T>> is used.
+ *
+ * This is a template class. The type T will specify the type that the value of the vertices will be.
+ * Example: MatrixGraph<int> is a graph where every vertex has an integer value.
+ */
 template <typename T>
 class MatrixGraph {
 
 private:
+    /*
+     * mat_t is a matrix type ( std::vector<std::vector<bool>> )
+     * v_vector is a vertex vector ( std::vector<Vertex<T>> )
+     */
     typedef std::vector<bool> VB;
     typedef std::vector<VB> mat_t;
     typedef std::vector<Vertex<T>> v_vector;
@@ -23,54 +36,81 @@ protected:
     v_vector vertices;  // vector of vertices
 
 public:
-    // constructors
+    // Default Constructor
     MatrixGraph()
     {
         this->adj.resize(0);
+        this->vertices.resize(0);
     }
 
-    MatrixGraph(const int& size)
+    // Constructor with size
+    // @param: size ( const int& ) - number of vertices
+    MatrixGraph(const unsigned long& size)
     {
         this->adj.resize(size);
-        for (int i = 0; i < size; ++i)
+        this->vertices.resize(size);
+        for (unsigned long i = 0; i < size; ++i)
             this->adj[i].resize(size);
     }
 
-    MatrixGraph(const MatrixGraph& obj)
+    // Copy Constructor
+    MatrixGraph(const MatrixGraph& obj) : adj(obj.get_adj()), vertices(obj.get_vertices())
     {
-        // TODO: optimize code : size(), :adj() {}
-        this->adj = obj.get_adj();
     }
 
-    // destructor
-    ~MatrixGraph()
-    {
-        this->adj.clear();
-    }
+    // Purely Virtual Destructor ( this is an interface )
+    virtual ~MatrixGraph() = 0; // purely virtual destructor
 
-    // getters
+
+    // getter for adjacency matrix
     virtual mat_t get_adj() const
     {
         return this->adj;
     }
 
-    virtual int get_size() const
+    // getter for number of vertices
+    virtual unsigned long get_size() const
     {
         return this->vertices.size();
     }
 
-    // utility
-    virtual bool vertex_exists(const int& vertex_number) const
+    // getter for vertex list
+    virtual std::vector<Vertex<T>> get_vertices() const
     {
-        if ( vertex_number > this->get_size() )
-            return false;
+        return this->vertices;
+    }
 
-        for (int i = 0; i < this->get_size(); ++i)
-            if (this->adj[i][vertex_number] || this->adj[vertex_number][i] )
+    // check if vertex with a certain value exists
+    virtual bool vertex_exists(const T& value) const
+    {
+        typename std::vector<Vertex<T>>::iterator it;
+        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( *it == value )
                 return true;
         return false;
     }
 
+    // check if vertex exists
+    virtual bool vertex_exists(const Vertex<T>& vertex) const
+    {
+        typename std::vector<Vertex<T>>::iterator it;
+        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( *it == vertex )
+                return true;
+        return false;
+    }
+
+    // gets the position of a vertex in the vertex array
+    virtual int get_vertex_key(const Vertex<T>& vertex) const
+    {
+        typename std::vector<Vertex<T>>::iterator it;
+        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( *it == vertex )
+                return it - this->vertices.begin();
+        return -1;
+    }
+
+    // check if two vertices are adjacent
     virtual bool adjacent(const int& src_v, const int& dst_v) const
     {
         if (this->adj[src_v][dst_v])
@@ -78,11 +118,13 @@ public:
         return false;
     }
 
-    virtual std::vector<int> neighbors(const int& src_v) const
+    // return a vector of the neighbours of vertex src_v
+    virtual std::vector<Vertex<T>> neighbors(const Vertex<T>& src_v) const
     {
-        std::vector<int> result;
+        int pos = get_vertex_key(src_v);
+        std::vector<Vertex<T>> result;
         for (int column = 0; column < this->get_size(); ++column)
-            if (this->adj[src_v][column])
+            if (this->adj[pos][column])
                 result.push_back(column);
         return result;
     }
@@ -107,6 +149,8 @@ public:
         this->vertices[vertex].set_value(value);
     }
 
+    virtual void add_vertex(const Vertex<T>& vertex) = 0;
+    virtual void remove_vertex(const Vertex<T>& vertex) = 0;
 };
 
 #endif //GRAPHALGORITHMS_GRAPH_H
