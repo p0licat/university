@@ -129,15 +129,9 @@ public:
         return result;
     }
 
-    virtual void add_edge(const int& src_v, const int& dst_v)
-    {
-        this->adj[src_v][dst_v] = true;
-    }
+    virtual void add_edge(const int& src_v, const int& dst_v) = 0;
+    virtual void remove_edge(const int& src_v, const int& dst_v) = 0;
 
-    virtual void remove_edge(const int& src_v, const int& dst_v)
-    {
-        this->adj[src_v][dst_v] = false;
-    }
 
     virtual T get_vertex_value(const int& vertex) const
     {
@@ -149,8 +143,22 @@ public:
         this->vertices[vertex].set_value(value);
     }
 
-    virtual void add_vertex(const Vertex<T>& vertex) = 0;
-    virtual void remove_vertex(const Vertex<T>& vertex) = 0;
+    virtual void add_vertex(const Vertex<T>& vertex)
+    {
+        typename std::vector<Vertex<T>>::iterator it;
+        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( (*it).get_value() == nullptr )
+                (*it).set_value(vertex.get_value());
+    }
+
+
+    virtual void remove_vertex(const Vertex<T>& vertex)
+    {
+        typename std::vector<Vertex<T>>::iterator it;
+        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( *it == vertex )
+                this->vertices.erase(it);
+    }
 };
 
 #endif //GRAPHALGORITHMS_GRAPH_H
