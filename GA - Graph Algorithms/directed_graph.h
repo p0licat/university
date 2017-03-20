@@ -13,10 +13,12 @@ template <typename T>
 class DirectedMatrixGraph : MatrixGraph<T>
 {
 public:
-    virtual ~DirectedMatrixGraph() override
-    {
 
-    }
+    DirectedMatrixGraph() : MatrixGraph<T>() {}
+    DirectedMatrixGraph(const unsigned long& size) : MatrixGraph<T>(size) {}
+    DirectedMatrixGraph(const DirectedMatrixGraph& object) : MatrixGraph<T>(object) {}
+
+    virtual ~DirectedMatrixGraph() {}
 
     virtual void add_edge(const int& src_v, const int& dst_v) override
     {

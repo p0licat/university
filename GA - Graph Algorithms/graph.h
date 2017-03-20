@@ -83,9 +83,8 @@ public:
     // check if vertex with a certain value exists
     virtual bool vertex_exists(const T& value) const
     {
-        typename std::vector<Vertex<T>>::iterator it;
-        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
-            if ( *it == value )
+        for (auto it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( it->get_value() == value )
                 return true;
         return false;
     }
@@ -93,9 +92,8 @@ public:
     // check if vertex exists
     virtual bool vertex_exists(const Vertex<T>& vertex) const
     {
-        typename std::vector<Vertex<T>>::iterator it;
-        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
-            if ( *it == vertex )
+        for (auto it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( it->get_value() == vertex.get_value() )
                 return true;
         return false;
     }
@@ -103,8 +101,7 @@ public:
     // gets the position of a vertex in the vertex array
     virtual int get_vertex_key(const Vertex<T>& vertex) const
     {
-        typename std::vector<Vertex<T>>::iterator it;
-        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
+        for (auto it = this->vertices.begin(); it != this->vertices.end(); ++it)
             if ( *it == vertex )
                 return it - this->vertices.begin();
         return -1;
@@ -145,10 +142,9 @@ public:
 
     virtual void add_vertex(const Vertex<T>& vertex)
     {
-        typename std::vector<Vertex<T>>::iterator it;
-        for (it = this->vertices.begin(); it != this->vertices.end(); ++it)
-            if ( (*it).get_value() == nullptr )
-                (*it).set_value(vertex.get_value());
+        for (auto it = this->vertices.begin(); it != this->vertices.end(); ++it)
+            if ( it->get_value() == T() )
+                it->set_value(vertex.get_value());
     }
 
 
@@ -160,5 +156,8 @@ public:
                 this->vertices.erase(it);
     }
 };
+
+template <typename T>
+inline MatrixGraph<T>::~MatrixGraph() {}
 
 #endif //GRAPHALGORITHMS_GRAPH_H

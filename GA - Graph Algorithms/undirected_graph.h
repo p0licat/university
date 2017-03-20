@@ -12,10 +12,12 @@ template <typename T>
 class UndirectedMatrixGraph : MatrixGraph<T>
 {
 public:
-    virtual ~UndirectedMatrixGraph() override
-    {
 
-    }
+    UndirectedMatrixGraph() : MatrixGraph<T>() {}
+    UndirectedMatrixGraph(const unsigned long& size) : MatrixGraph<T>(size){}
+    UndirectedMatrixGraph(const UndirectedMatrixGraph& object) : MatrixGraph<T>(object) {}
+
+    virtual ~UndirectedMatrixGraph() {}
 
     virtual void add_edge(const int& src_v, const int& dst_v) override
     {

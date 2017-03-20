@@ -9,73 +9,56 @@ template <typename T>
 class Vertex
 {
 protected:
-    T* value;
+    T value;
 
 public:
-    Vertex()
-    {
-        this->value = nullptr;
-    }
+    Vertex() : value() {}
 
     Vertex(const T& object)
     {
-        this->value = new T(object);
+        this->value = object;
     }
 
-    Vertex(const Vertex& object)
+    Vertex(const Vertex<T>& object)
     {
         this->value = object.get_value();
     }
 
-    ~Vertex()
-    {
-        delete this->value;
-        this->value = nullptr;
-    }
+    ~Vertex() = default;
 
     virtual void set_value(const T& value)
     {
-        *this->value = value;
+        this->value = value;
     }
 
     virtual T get_value() const
     {
-        return *this->value;
+        return this->value;
     }
 
-    virtual bool operator==(const Vertex<T>& other)
+    virtual bool operator==(const Vertex<T>& other) const
     {
-        if ( this->value == other.get_value() )
-            return true;
-        return false;
+        return this->value == other.value;
     }
 
-    virtual bool operator>(const Vertex<T>& other)
+    virtual bool operator>(const Vertex<T>& other) const
     {
-        if ( this->value > other.get_value() )
-            return true;
-        return false;
+        return this->value > other.get_value();
     }
 
-    virtual bool operator<(const Vertex<T>& other)
+    virtual bool operator<(const Vertex<T>& other) const
     {
-        if ( this->value < other.get_value() )
-            return true;
-        return false;
+        return this->value < other.get_value();
     }
 
-    virtual bool operator<=(const Vertex<T>& other)
+    virtual bool operator<=(const Vertex<T>& other) const
     {
-        if ( this->value <= other.get_value() )
-            return true;
-        return false;
+        return this->value <= other.get_value();
     }
 
-    virtual bool operator>=(const Vertex<T>& other)
+    virtual bool operator>=(const Vertex<T>& other) const
     {
-        if ( this->value >= other.get_value() )
-            return true;
-        return false;
+        return this->value >= other.get_value();
     }
 };
 
