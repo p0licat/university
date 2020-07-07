@@ -1,0 +1,13 @@
+{
+    "embeddings": [
+      {
+        "tensorName": "My tensor",
+        "tensorShape": [
+          1000,
+          50
+        ],
+        "tensorPath": "https://raw.githubusercontent.com/p0licat/university/master/Experiments/Crawling/Jupyter%20Notebooks/vecs.tsv",
+        "metadataPath": "https://raw.githubusercontent.com/p0licat/university/master/Experiments/Crawling/Jupyter%20Notebooks/meta.tsv"
+      }
+    ]
+}
